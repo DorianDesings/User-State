@@ -7,11 +7,12 @@ const StyledDiv = styled.div`
 	margin-top: 50px;
 	width: 500px;
 	box-shadow: orange 0px 0px 30px 0px;
+	padding: 20px;
 `;
 
 const StyledImg = styled.img`
 	border-radius: 100px;
-	height: 100px;
+	height: 60px;
 `;
 
 const StyledFlexUsers = styled.div`

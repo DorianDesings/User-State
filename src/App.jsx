@@ -20,12 +20,12 @@ const App = () => {
 			)
 		: USERS;
 
-	/* const filterUser = USERS.filter(user => {
-		console.log('verify filter', verifyActiveUser);
+	const filterUser = USERS.filter(user => {
+		// console.log('verify filter', verifyActiveUser);
 		const activeUser = verifyActiveUser ? user.active : true;
 
 		return activeUser;
-	}); */
+	});
 
 	/* const sortUser = [...USERS].sort((a, b) => {
 		if (selectOptionUser === 'name') {
@@ -33,11 +33,10 @@ const App = () => {
 		}
 	}); */
 
-	const sortUser = [...USERS].sort((a, b) => {
-		if (selectOptionUser === 'name') {
-			return a.name.localeCompare(b.name);
-		}
-	});
+	const sortUser =
+		selectOptionUser === 'name'
+			? [...USERS].sort((a, b) => a.name.localeCompare(b.name))
+			: [...USERS];
 
 	return (
 		<>
