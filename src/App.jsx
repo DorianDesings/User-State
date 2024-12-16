@@ -10,15 +10,33 @@ import SelectOptions from './components/select/Select';
 import { USERS } from './constants/userInfo';
 
 const App = () => {
-	const [verifyUserName, setVerifyUserName] = useState('');
+	const [searchUserName, setSearchUserName] = useState('');
 	const [verifyActiveUser, setVerifyActiveUser] = useState(false);
 	const [selectOptionUser, setSelectOptionUser] = useState('');
 
-	const filterUser = USERS.filter(user => {
-		console.log('verificacion filtro', verifyActiveUser);
+	const searchUser = searchUserName
+		? USERS.filter(user =>
+				user.name.toLowerCase().includes(searchUserName.toLowerCase())
+			)
+		: USERS;
+
+	/* const filterUser = USERS.filter(user => {
+		console.log('verify filter', verifyActiveUser);
 		const activeUser = verifyActiveUser ? user.active : true;
 
 		return activeUser;
+	}); */
+
+	/* const sortUser = [...USERS].sort((a, b) => {
+		if (selectOptionUser === 'name') {
+			return a.name.localeCompare(b.name);
+		}
+	}); */
+
+	const sortUser = [...USERS].sort((a, b) => {
+		if (selectOptionUser === 'name') {
+			return a.name.localeCompare(b.name);
+		}
 	});
 
 	return (
@@ -31,7 +49,7 @@ const App = () => {
 						type='text'
 						text={event => {
 							// console.log(event.target.value);
-							setVerifyUserName(event.target.value);
+							setSearchUserName(event.target.value);
 						}}
 					/>
 					<Checkbox
@@ -48,7 +66,7 @@ const App = () => {
 						}}
 					/>
 				</ContainerOptions>
-				<UserMap users={filterUser} />
+				<UserMap users={sortUser} />
 			</Container>
 		</>
 	);

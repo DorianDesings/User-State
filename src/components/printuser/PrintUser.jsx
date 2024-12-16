@@ -4,6 +4,7 @@ import {
 	StyledFlexUsers,
 	StyledName,
 	StyledUserName,
+	StyledDivVerify,
 	StyledVerify
 } from './printuser.styles';
 
@@ -15,7 +16,11 @@ const PrintUser = ({ img, name, username, active }) => {
 				<StyledName>{name}</StyledName>
 				<StyledUserName>@{username}</StyledUserName>
 			</StyledFlexUsers>
-			<StyledVerify>{active ? 'Activo' : 'Desactivado'}</StyledVerify>
+			<StyledDivVerify>
+				<StyledVerify $active={active}>
+					{active ? 'Activo' : 'Desactivado'}
+				</StyledVerify>
+			</StyledDivVerify>
 		</StyledDiv>
 	);
 };

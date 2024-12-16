@@ -1,10 +1,9 @@
-import { USERS } from '../../constants/userInfo';
 import PrintUser from '../printuser/PrintUser';
 
-const UserMap = () => {
+const UserMap = ({ users }) => {
 	return (
 		<>
-			{USERS.map(userInfo => {
+			{users.map(userInfo => {
 				return (
 					<PrintUser
 						key={userInfo.id}
