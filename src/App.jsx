@@ -14,49 +14,9 @@ const App = () => {
 	const [verifyActiveUser, setVerifyActiveUser] = useState(false);
 	const [selectOptionUser, setSelectOptionUser] = useState('');
 
-	// const searchUser = USERS.filter(user => {
-	// 	if (searchUserName) {
-	// 		return user.name
-	// 			.toLowerCase()
-	// 			.includes(searchUserName.toLocaleLowerCase());
-	// 	}
-	// 	return user;
-	// });
-
-	const searchUser = searchUserName
-		? USERS.filter(user =>
-				user.name.toLowerCase().includes(searchUserName.toLowerCase())
-			)
-		: USERS;
-
-	/////
-
-	// const filterUser = USERS.filter(user => {
-	// 	// console.log('verify filter', verifyActiveUser);
-	// 	const activeUser = verifyActiveUser ? user.active : true;
-
-	// 	return activeUser;
-	// });
-
-	const filterUser = USERS.filter(user => {
-		if (verifyActiveUser) {
-			return user.active;
-		}
-		return user;
-	});
-
-	/////
-
-	/* const sortUser = [...USERS].sort((a, b) => {
-		if (selectOptionUser === 'name') {
-			return a.name.localeCompare(b.name);
-		}
-	}); */
-
-	const sortUser =
-		selectOptionUser === 'name'
-			? [...USERS].sort((a, b) => a.name.localeCompare(b.name))
-			: [...USERS];
+	const filteredUsers = filterByActive(USERS, verifyActiveUser);
+	const filterSearchName = filterByName(filteredUsers, searchUserName);
+	const filterSelectUser = filterByUser(filterSearchName, selectOptionUser);
 
 	return (
 		<>
@@ -85,10 +45,77 @@ const App = () => {
 						}}
 					/>
 				</ContainerOptions>
-				<UserMap users={searchUser} />
+				<UserMap users={filterSelectUser} />
 			</Container>
 		</>
 	);
 };
 
 export default App;
+
+const filterByActive = (users, onlyActive) => {
+	if (!onlyActive) return users;
+	const filteredUsers = users.filter(user => user.active);
+	return filteredUsers;
+};
+
+const filterByName = (users, searchUserName) => {
+	if (!searchUserName) return users;
+	return users.filter(user =>
+		user.name.toLowerCase().includes(searchUserName.toLocaleLowerCase())
+	);
+};
+
+const filterByUser = (users, selectOptionUser) => {
+	if (!selectOptionUser) return users;
+	const sortUsers = [...users].sort((a, b) => {
+		if (selectOptionUser === 'name') {
+			return a.name.localeCompare(b.name);
+		}
+	});
+	return sortUsers;
+};
+
+// const searchUser = USERS.filter(user => {
+// 	if (searchUserName) {
+// 		return user.name
+// 			.toLowerCase()
+// 			.includes(searchUserName.toLocaleLowerCase());
+// 	}
+// 	return user;
+// });
+
+// const searchUser = searchUserName
+// 	? USERS.filter(user =>
+// 			user.name.toLowerCase().includes(searchUserName.toLowerCase())
+// 		)
+// 	: USERS;
+
+/////
+
+// const filterUser = USERS.filter(user => {
+// 	// console.log('verify filter', verifyActiveUser);
+// 	const activeUser = verifyActiveUser ? user.active : true;
+
+// 	return activeUser;
+// });
+
+/////
+
+/* const sortUser = [...USERS].sort((a, b) => {
+		if (selectOptionUser === 'name') {
+			return a.name.localeCompare(b.name);
+		}
+	}); */
+
+// const sortUser =
+// 	selectOptionUser === 'name'
+// 		? [...USERS].sort((a, b) => a.name.localeCompare(b.name))
+// 		: [...USERS];
+
+// const filterUser = USERS.filter(user => {
+// 	if (verifyActiveUser) {
+// 		return user.active;
+// 	}
+// 	return user;
+// });
