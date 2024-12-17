@@ -14,18 +14,38 @@ const App = () => {
 	const [verifyActiveUser, setVerifyActiveUser] = useState(false);
 	const [selectOptionUser, setSelectOptionUser] = useState('');
 
+	// const searchUser = USERS.filter(user => {
+	// 	if (searchUserName) {
+	// 		return user.name
+	// 			.toLowerCase()
+	// 			.includes(searchUserName.toLocaleLowerCase());
+	// 	}
+	// 	return user;
+	// });
+
 	const searchUser = searchUserName
 		? USERS.filter(user =>
 				user.name.toLowerCase().includes(searchUserName.toLowerCase())
 			)
 		: USERS;
 
-	const filterUser = USERS.filter(user => {
-		// console.log('verify filter', verifyActiveUser);
-		const activeUser = verifyActiveUser ? user.active : true;
+	/////
 
-		return activeUser;
+	// const filterUser = USERS.filter(user => {
+	// 	// console.log('verify filter', verifyActiveUser);
+	// 	const activeUser = verifyActiveUser ? user.active : true;
+
+	// 	return activeUser;
+	// });
+
+	const filterUser = USERS.filter(user => {
+		if (verifyActiveUser) {
+			return user.active;
+		}
+		return user;
 	});
+
+	/////
 
 	/* const sortUser = [...USERS].sort((a, b) => {
 		if (selectOptionUser === 'name') {
@@ -65,7 +85,7 @@ const App = () => {
 						}}
 					/>
 				</ContainerOptions>
-				<UserMap users={sortUser} />
+				<UserMap users={searchUser} />
 			</Container>
 		</>
 	);
