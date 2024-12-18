@@ -3,20 +3,20 @@ import Container from './components/container/Container';
 import ContainerOptions from './components/containeroptions/ContainerOptions';
 import Input from './components/input/Input';
 
-import { GlobalStyles } from './styles/GlobalStyles';
-import UserMap from './components/usersMap/UserMap';
 import Checkbox from './components/checkbox/Checkbox';
 import SelectOptions from './components/select/Select';
+import UserMap from './components/usersMap/UserMap';
 import { USERS } from './constants/userInfo';
+import { GlobalStyles } from './styles/GlobalStyles';
 
 const App = () => {
 	const [searchUserName, setSearchUserName] = useState('');
 	const [verifyActiveUser, setVerifyActiveUser] = useState(false);
 	const [selectOptionUser, setSelectOptionUser] = useState('');
 
-	const filteredUsers = filterByActive(USERS, verifyActiveUser);
-	const filterSearchName = filterByName(filteredUsers, searchUserName);
-	const filterSelectUser = filterByUser(filterSearchName, selectOptionUser);
+	let filteredUsers = filterByActive(USERS, verifyActiveUser);
+	filteredUsers = filterByName(filteredUsers, searchUserName);
+	filteredUsers = filterByUser(filteredUsers, selectOptionUser);
 
 	return (
 		<>
@@ -45,7 +45,7 @@ const App = () => {
 						}}
 					/>
 				</ContainerOptions>
-				<UserMap users={filterSelectUser} />
+				<UserMap users={filteredUsers} />
 			</Container>
 		</>
 	);
@@ -67,12 +67,14 @@ const filterByName = (users, searchUserName) => {
 };
 
 const filterByUser = (users, selectOptionUser) => {
-	if (!selectOptionUser) return users;
+	if (selectOptionUser === 'default') return users;
+
 	const sortUsers = [...users].sort((a, b) => {
 		if (selectOptionUser === 'name') {
 			return a.name.localeCompare(b.name);
 		}
 	});
+
 	return sortUsers;
 };
 
